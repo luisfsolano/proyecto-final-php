@@ -21,7 +21,11 @@
     $visita->torre = $data['torre'];
     $visita->piso = $data['piso'];
     $visita->apartamento = $data['apartamento'];
-    $visita->fecha = new DateTime();
+    
+    $fecha = new DateTime();
+    $fecha->setTimezone(new DateTimeZone('America/Panama'));
+
+    $visita->fecha = $fecha;
     $visita->image = $visita->fecha->getTimestamp().'-'.$visita->cedula.'.png';
     $visita->usuario = $_SESSION['user_id'];
     $visita->estado = 1;

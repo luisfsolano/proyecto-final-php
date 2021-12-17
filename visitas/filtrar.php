@@ -14,30 +14,22 @@
     $visita=new Visita($db);
 
     $data = json_decode(file_get_contents('php://input'), true);
-    echo json_encode(array("message"=>"La visita ha sido registrada."));
-    http_response_code(200);
 
-    /*
-    $visita->nombre = $data['nombre'];
     $visita->cedula = $data['cedula'];
-    $visita->torre = $data['torre'];
-    $visita->piso = $data['piso'];
-    $visita->apartamento = $data['apartamento'];
-    $visita->fecha = new DateTime();
-    $visita->image = $visita->fecha->getTimestamp().'-'.$visita->cedula.'.png';
-    $visita->usuario = $_SESSION['user_id'];
-    $visita->estado = 1;
+
+    $visita->torre = isset($data['torre']) ? $data['torre'] : null;
+    $visita->piso = isset($data['piso']) ? $data['piso'] : null;
+    $visita->apartamento = isset($data['apartamento']) ? $data['apartamento'] : null;
     
-    if($visita->crear()){
-        $image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $image));
-        file_put_contents('../fotosrecepciones/'.$visita->image, $image); 
-        http_response_code(201);
-        echo json_encode(array("message"=>"La visita ha sido registrada."));
+    $rs = $visita->filtrar($data['fechaInicio'],$data['fechaFin']);
+    
+    if($rs){
+        http_response_code(200);
+        echo json_encode(array("message"=>$rs));
     }else{
-        http_response_code(503);
-        echo json_encode(array("message"=>"No se pudo registrar la visita."));
+        http_response_code(204);
+        echo json_encode(array("message"=>"error en la busqueda"));
     }
-    */
 
 
 

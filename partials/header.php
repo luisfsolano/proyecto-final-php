@@ -16,12 +16,12 @@
       <?php endif; ?>
       <?php if($user['rol']==2): ?>
         <li class="nav-item">
-          <a class="nav-link" href="#">Reportes</a>
+          <a class="nav-link" href="reportes.php">Reportes</a>
         </li>
       <?php endif; ?>
       <?php if($user['rol']==3): ?>
         <li class="nav-item">
-          <a class="nav-link" href="#">Mis Visitas</a>
+          <a class="nav-link" href="reportes.php">Mis Visitas</a>
         </li>
       <?php endif; ?>
     </ul>

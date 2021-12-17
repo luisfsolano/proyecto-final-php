@@ -8,7 +8,7 @@
   require 'database.php';
 
   if (!empty($_POST['email']) && !empty($_POST['password'])) {
-    $records = $conn->prepare('SELECT id, email, rol, estado, password FROM users WHERE email = :email');
+    $records = $conn->prepare('SELECT * FROM users WHERE email = :email');
     $records->bindParam(':email', $_POST['email']);
     $records->execute();
     $results = $records->fetch(PDO::FETCH_ASSOC);
@@ -20,11 +20,23 @@
         $_SESSION['user_id'] = $results['id'];
         header("Location: /proyectoFinal");
       }else{
-        $message = 'Lo sentimos, tu usuario no ha sido habilitado';
+        $message = '
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Lo sentimos, tu usuario no ha sido habilitado</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
       }
       
     } else {
-      $message = 'Lo sentimos, tus credenciales no coinciden';
+      $message = '
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Lo sentimos, tus credenciales no coinciden</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
     }
   }
 
@@ -73,6 +85,9 @@
     </div>
     </div>
     
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 
     </form>

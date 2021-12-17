@@ -4,7 +4,7 @@
   require 'database.php';
 
   if (isset($_SESSION['user_id'])) {
-    $records = $conn->prepare('SELECT id, email, rol, password FROM users WHERE id = :id');
+    $records = $conn->prepare('SELECT * FROM users WHERE id = :id');
     $records->bindParam(':id', $_SESSION['user_id']);
     $records->execute();
     $results = $records->fetch(PDO::FETCH_ASSOC);
@@ -62,9 +62,9 @@
               <label for="labelforcedula">Torre</label>
               <select class="custom-select" id="torre" name="torre">
                 <option>Seleccione</option>
-                <option value="1">Torre 1</option>
-                <option value="2">Torre 2</option>
-                <option value="3">Torre 3</option>
+                <option value="Torre 1">Torre 1</option>
+                <option value="Torre 2">Torre 2</option>
+                <option value="Torre 3">Torre 3</option>
               </select>
             </div>
 
@@ -119,7 +119,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Tomar Foto</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -4,7 +4,7 @@
   require 'database.php';
 
   if (isset($_SESSION['user_id'])) {
-    $records = $conn->prepare('SELECT id, email, rol, password FROM users WHERE id = :id');
+    $records = $conn->prepare('SELECT * FROM users WHERE id = :id');
     $records->bindParam(':id', $_SESSION['user_id']);
     $records->execute();
     $results = $records->fetch(PDO::FETCH_ASSOC);
@@ -29,6 +29,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="assets/css/all.css" rel="stylesheet">
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -52,32 +53,35 @@
                 <div class="col">
                 </div>
             </div>
+            
             <div class="row my-2">
-                <div class="col">
-                <select class="custom-select" id="torre" name="torre">
-                    <option>Seleccione Torre</option>
-                    <option value="1">Torre 1</option>
-                    <option value="2">Torre 2</option>
-                    <option value="3">Torre 3</option>
-                </select>
-                </div>
-                <div class="col">
-                <select class="custom-select" id="piso" name="piso">
-                    <option>Seleccione Piso</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                </div>
-                <div class="col">
-                <select class="custom-select" id="apartamento" name="apartamento">
-                    <option>Seleccione Apartamento</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-                </div>
+                <?php if($user['rol']==2): ?>
+                    <div class="col">
+                    <select class="custom-select" id="torre" name="torre">
+                        <option>Seleccione Torre</option>
+                        <option value="Torre 1">Torre 1</option>
+                        <option value="Torre 2">Torre 2</option>
+                        <option value="Torre 3">Torre 3</option>
+                    </select>
+                    </div>
+                    <div class="col">
+                    <select class="custom-select" id="piso" name="piso">
+                        <option>Seleccione Piso</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    </div>
+                    <div class="col">
+                    <select class="custom-select" id="apartamento" name="apartamento">
+                        <option>Seleccione Apartamento</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    </div>
+                <?php endif; ?>
                 <div class="col">
                 <span class="form-control btn btn-success" id="buscar">
                     <i class="fas fa-check"></i>
@@ -98,24 +102,11 @@
                 <th scope="col">Piso</th>
                 <th scope="col">Apartamento</th>
                 <th scope="col">Documento</th>
+                <th scope="col">Alertas</th>
                 
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1001</th>
-                    <td>2021-12-17</td>
-                    <td>6-720-388</td>
-                    <td>Luis Solano</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>A</td>
-                    <td>
-                        <a href="fotosrecepciones/1639710194-7-709-256.png" target="_blank">
-                            <span class="fas fa-eye"></span>
-                        </a>
-                    </td>
-                </tr>
+            <tbody id="bodyReporte">
             </tbody>
         </table>
 
@@ -125,7 +116,10 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
     <script src="assets/js/filtro.js"></script>
-
+    <script type="text/javascript">
+        var rol = <?php echo($user['rol']) ?>;
+        var depa = '<?php echo($user['depa'])?>';
+    </script>
 <?php else: header('Location: /proyectoFinal/login.php');?>
 <?php endif; ?>
   
