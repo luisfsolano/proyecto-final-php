@@ -36,7 +36,6 @@ const llenarSelectConDispositivosDisponibles = () => {
 					option.value = dispositivo.deviceId;
 					option.text = dispositivo.label;
 					$listaDeDispositivos.appendChild(option);
-					console.log("$listaDeDispositivos => ", $listaDeDispositivos)
 				});
 			}
 		});
@@ -125,7 +124,7 @@ const llenarSelectConDispositivosDisponibles = () => {
  
 					let foto = $canvas.toDataURL(); //Esta es la foto, en base 64¿
 					$(".image-tag").val(foto);
-					document.getElementById('results').innerHTML = '<img style="max-width: 70%;" src="'+foto+'"/>';
+					document.getElementById('results').innerHTML = '<img id="photopre" style="max-width: 70%;" src="'+foto+'"/>';
  
 					//Reanudar reproducción
 					$video.play();
